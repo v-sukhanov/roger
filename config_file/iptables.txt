@@ -1,0 +1,13 @@
+# block all input
+iptables -P INPUT DROP
+# related and estabilished
+iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp -i enp0s8 --dport 2288 -j ACCEPT
+# http
+iptables -A INPUT -p tcp -i enp0s8 --dport 80 -j ACCEPT
+# https
+iptables -A INPUT -p tcp -i enp0s8 --dport 443 -j ACCEPT
+# loop back 
+iptables -t filter -A INPUT -i lo -j ACCEPT
+iptables -t filter -A OUTPUT -o lo -j ACCEPT
